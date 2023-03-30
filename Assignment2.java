@@ -1,43 +1,148 @@
-//import java.math.*;
+import java.lang.Math;
 
 public class Assignment2 {
     public static void main(String[] args) {
         // an example
-        Circle myc = new Circle(4, 3, 6);
-        System.out.println(myc.area());
-        System.out.println(myc.contains(new Point(10, 50)));
+        Point center = new Point(495, 242);
+        Point posn = new Point(5.5, 10.5);
+        Circle circle = new Circle(center, 4);
+        Rectangle rect = new Rectangle(center, 22.5, 33.3);
+        Square square = new Square(center, 6);
+        circle.shapeDetails(circle, posn);
+        rect.shapeDetails(rect, posn);
+        square.shapeDetails(square, posn);
     }
 }
 
 class Point {
     // coordinates of a point
-    float x;
-    float y;
+    double x;
+    double y;
 
-    Point(float x, float y) {
+    Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
 }
 
-class Circle {
-    private Point center;
-    private float radius;
+abstract class Shape {
+    static Point center;
+    String name;
 
-    Circle(float x, float y, float r) {
-        this.center = new Point(x, y);
-        this.radius = r;
+    public Shape(Point center) {
+        Shape.center = center;
     }
 
-    float area() {
+    public Point getCenter() {
+        return center;
+    }
+
+    public abstract double perimeter();
+
+    public abstract double area();
+
+    public abstract boolean contains(Point posn);
+
+    void shapeDetails(Shape shape, Point point) {
+        /*
+         * This method prints out the area and preimeter of the given shape and whether
+         * it contains the given position or not
+         */
+        System.out.println("The area of the " + shape.name + " is " + shape.area());
+        System.out.println("The perimeter of the " + shape.name + " is " + shape.perimeter());
+        String contains = (shape.contains(point)) ? "The " + shape.name + " contains the position"
+                : "The " + shape.name + " does not contain the position";
+        System.out.println(contains);
+    }
+}
+
+class Circle extends Shape {
+    private float radius;
+
+    public Circle(Point center, float r) {
+        super(center);
+        this.radius = r;
+        this.name = "circle";
+    }
+
+    public double area() {
         // return (float) (3.14 * radius * radius);
         return (float) ((float) Math.PI * Math.pow(radius, 2));
     }
 
-    boolean contains(Point point) {
+    public double perimeter() {
+        return Math.PI * radius * 2;
+    }
+
+    public boolean contains(Point point) {
         // distSquared - disatnce from the point to the center of the circle
         double distSquared = Math.pow((point.x - center.x), 2) + Math.pow((point.y - center.y), 2);
         double radiusSquared = Math.pow(radius, 2);
         return distSquared <= radiusSquared;
     }
+}
+
+class Rectangle extends Shape {
+    double width;
+    double height;
+
+    public Rectangle(Point center, double width, double height) {
+        super(center);
+        this.width = width;
+        this.height = height;
+        this.name = "rectangle";
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double perimeter() {
+        return 2 * (width + height);
+    }
+
+    public double area() {
+        return width * height;
+    }
+
+    public boolean contains(Point posn) {
+        double halfWidth = width / 2;
+        double halfHeight = height / 2;
+        return posn.x >= center.x - halfWidth && posn.x <= center.x + halfWidth && posn.y >= center.y - halfHeight
+                && posn.y <= center.y + halfHeight;
+    }
+
+}
+
+class Square extends Shape {
+    double size;
+
+    public Square(Point center, double size) {
+        super(center);
+        this.size = size;
+        this.name = "square";
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public double perimeter() {
+        return 4 * size;
+    }
+
+    public double area() {
+        return size * size;
+    }
+
+    public boolean contains(Point posn) {
+        double halfSize = size / 2;
+        return posn.x >= center.x - halfSize && posn.x <= center.x + halfSize && posn.y >= center.y - halfSize
+                && posn.y <= center.y + halfSize;
+    }
+
 }
