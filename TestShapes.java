@@ -77,3 +77,36 @@ class Rectangle extends Shape {
 
 
 }
+
+
+class Square extends Shape {
+    double size;
+
+    public Square(Post center, double size) {
+        super(center);
+        this.size = size;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    @Override
+    public double perimeter() {
+        return 4 * size;
+    }
+
+    @Override
+    public double area() {
+        return size * size;
+    }
+
+    @Override
+    public boolean contains(Post pos) {
+        double halfSize = size / 2;
+        return pos.getX() >= center.getX() - halfSize
+                && pos.getX() <= center.getX() + halfSize
+                && pos.getY() >= center.getY() - halfSize
+                && pos.getY() <= center.getY() + halfSize;
+    }
+}
