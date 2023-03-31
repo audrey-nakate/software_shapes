@@ -14,6 +14,7 @@ public class Assignment2 {
     }
 }
 
+//comment to add changes
 class Point {
     // coordinates of a point
     double x;
