@@ -5,9 +5,11 @@ public class Assignment2 {
         // an example
         Point center = new Point(495, 242);
         Point posn = new Point(5.5, 10.5);
+
         Circle circle = new Circle(center, 4);
         Rectangle rect = new Rectangle(center, 22.5, 33.3);
         Square square = new Square(center, 6);
+        
         circle.shapeDetails(circle, posn);
         rect.shapeDetails(rect, posn);
         square.shapeDetails(square, posn);
@@ -38,10 +40,13 @@ abstract class Shape {
         return center;
     }
 
+    //returns the perimeter of the given shape
     public abstract double perimeter();
 
+    //returns the area of the given shape
     public abstract double area();
 
+    //determines whether a position can be found on the shape in question
     public abstract boolean contains(Point posn);
 
     void shapeDetails(Shape shape, Point point) {
