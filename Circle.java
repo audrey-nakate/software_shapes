@@ -1,10 +1,11 @@
 
-public class Circle {
+public class Circle extends Shape{
    
         private float radius;
         public Circle(Point center, float r) {
-            super();
+            super(center);
             this.radius = r;
+            this.name = "circle";
         }
     
         public double area() {
@@ -22,9 +23,5 @@ public class Circle {
             double radiusSquared = Math.pow(radius, 2);
             return distSquared <= radiusSquared;
         }
-
-        public void shapeDetails(Circle circle, Point posn) {
-        }
-    
 
 }
